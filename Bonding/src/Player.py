@@ -11,7 +11,4 @@ class Player(object, health):
 
 
     def __init__(self):
-        '''
-        Constructor
-        '''
-        
+        self.health = health
