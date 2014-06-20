@@ -3,11 +3,11 @@ from math import *
 from zellegraphics import *
 
 
+def ribbonAttack(p1, p2):
+    ribbon = Line(p1, p2)
+    ribbon.setOutline("red")
+    ribbon.setFill("red")
 
-ribbon = Line(pointOne, pointTwo)
-ribbon.setOutline("red")
-ribbon.setFill("red")
-#TODO: find a way to set thickness
 
 def getDistance(p1, p2):
     return sqrt(((p2.getX() - p1.getX()) ** 2) + ((p2.getY() - p1.getY()) ** 2))

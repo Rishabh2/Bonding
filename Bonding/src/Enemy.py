@@ -1,11 +1,11 @@
 
-class Enemy(object, health, damageDealer, speed):
+class Enemy(object):
     '''
     Class for the player objects
     '''
 
 
-    def __init__(self):
+    def __init__(self, health, damageDealer, speed):
         '''
         Constructor
         '''
