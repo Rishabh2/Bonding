@@ -1,7 +1,3 @@
-'''
-Shawn Leedy
-'''
-
 from Player import *
 from math import *
 from zellegraphics import *
@@ -18,5 +14,6 @@ def getDistance(p1, p2):
 
 def getDamage(p1, p2):
     distance = getDistance(p1, p2)
+    distance = round(distance, 1)
     damage = 0
-    player.health -= damage
+    enemy.health -= damage
