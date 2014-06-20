@@ -1,4 +1,5 @@
-class Player(object, health):
+
+class Enemy(object, health, damageDealer, speed):
     '''
     Class for the player objects
     '''
@@ -8,4 +9,8 @@ class Player(object, health):
         '''
         Constructor
         '''
-        
+        self.health = health
+        self.damage = damageDealer
+        self.speed = speed
+    def _move(self, speed):
+        pass
