@@ -4,11 +4,11 @@ Created on Jun 20, 2014
 @author: Rishabh
 '''
 
-class Player(object, health):
+class Player(object):
     '''
     Class for the player objects
     '''
 
 
-    def __init__(self):
+    def __init__(self, health):
         self.health = health
