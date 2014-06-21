@@ -1,4 +1,3 @@
-
 class Enemy(object):
     '''
     Class for the player objects

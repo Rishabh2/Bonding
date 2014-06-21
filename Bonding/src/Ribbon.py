@@ -3,7 +3,7 @@ from math import *
 from zellegraphics import *
 
 
-def ribbonAttack(p1, p2):
+def ribbonForm(p1, p2):
     ribbon = Line(p1, p2)
     ribbon.setOutline("red")
     ribbon.setFill("red")
