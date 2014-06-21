@@ -11,4 +11,4 @@ Player.health = 100
 FPS = 60
 
 
-#event loop
+def mainLoop():
