@@ -78,6 +78,7 @@ def mainLoop():
                 player.move(0, -1)
         else:
             player.playerPoint(screenWidth * 1 / 4, screenHeight)
+        
             
             #player two handling
         if player2.living == True:
@@ -99,6 +100,23 @@ def mainLoop():
                 player2.move(0, -1)
         else:
             player2.playerPoint(screenWidth * 3 / 4, screenHeight)
+            
+        for e in events:
+            if (pyg.key.get_pressed()[K_BACKSPACE]):
+                toDeal = (player.limit - player.health)/2
+                if toDeal <= 0:
+                    pass
+                else:
+                    player2.damageTake(toDeal)
+                    player.addHealth(toDeal)
+                    
+            if (pyg.key.get_pressed()[K_KP0]):
+                toDeal = (player2.limit - player2.health)/2
+                if toDeal <= 0:
+                    pass
+                else:
+                    player.damageTake(toDeal)
+                    player2.addHealth(toDeal)
         pyg.display.update()
 
 mainLoop()
