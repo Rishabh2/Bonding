@@ -1,9 +1,7 @@
+import player
+from math import *
+
 class Enemy(object):
-    '''
-    Class for the player objects
-    '''
-
-
     def __init__(self, health, damageDealer, speed):
         '''
         Constructor
@@ -11,5 +9,13 @@ class Enemy(object):
         self.health = health
         self.damage = damageDealer
         self.speed = speed
-    def _move(self, speed):
-        pass
+    def getDistance(p1, p2):
+        return sqrt(((p2.getX() - p1.getX()) ** 2) + ((p2.getY() - p1.getY()) ** 2))
+    
+    def move(self, speed, player1, player2):
+        distanceToP1 = getDistance(self, player1)
+        distanceToP2 = getDistance(self, player2)
+        if distanceToP1 < distanceToP2:
+            pass
+        else:
+            pass    
