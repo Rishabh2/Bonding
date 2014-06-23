@@ -1,4 +1,4 @@
-import player
+import Player
 from math import *
 
 class Enemy(object):
