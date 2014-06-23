@@ -64,5 +64,7 @@ def mainLoop():
                 player.move(-1, 0)
             while player.playerPoint[1] - playerHeight/2 + 14 < yoffset:
                 player.move(0, 1)
+            while player.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
+                player.move(0, -1)
         pyg.display.update()
 mainLoop()
