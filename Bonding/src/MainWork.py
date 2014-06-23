@@ -53,6 +53,7 @@ def mainLoop():
         screen.blit(playerImage, (player.playerPoint[0] - 50, player.playerPoint[1] - 72/2))
         screen.blit(player2Image, (player2.playerPoint[0] - 50, player2.playerPoint[1] - 72/2))
         for e in events:
+            #player one handling
             if (pyg.key.get_pressed()[K_w]):
                 player.move(0, -1 * player.speed)
             if (pyg.key.get_pressed()[K_s]):
@@ -70,7 +71,7 @@ def mainLoop():
             while player.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
                 player.move(0, -1)
             
-            
+            #player two handling
             if (pyg.key.get_pressed()[K_UP]):
                 player2.move(0, -1 * player2.speed)
             if (pyg.key.get_pressed()[K_DOWN]):
