@@ -23,4 +23,3 @@ pyg.display.update()
 pyg.time.delay(3000)
 def mainLoop():
     pass
-

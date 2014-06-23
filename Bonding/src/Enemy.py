@@ -1,9 +1,5 @@
+import player
 class Enemy(object):
-    '''
-    Class for the player objects
-    '''
-
-
     def __init__(self, health, damageDealer, speed):
         '''
         Constructor
