@@ -14,10 +14,10 @@ FPS = 60
 
 screen = pyg.display.set_mode([screenWidth, screenHeight])
 pyg.display.set_caption("Map Test")
-floor = Floor.Floor(10,15)
+floor = Floor.Floor(10,10)
 for row in range(len(floor.rooms)):
     for col in range(len(floor.rooms[row])):
-        floor.rooms[row][col].mapdraw(row, col, 60, 10, screen)
+        floor.rooms[row][col].mapdraw(row, col, 65, 10, screen)
         
 pyg.display.update()
 pyg.time.delay(3000)
