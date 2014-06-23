@@ -50,13 +50,13 @@ def mainLoop():
                 screen.blit(tileImage, [xoffset + col * tileSize, yoffset + row * tileSize])
         screen.blit(playerImage, (player.playerPoint[0] - 50, player.playerPoint[1] - 72/2))
         for e in events:
-            if (pyg.key.get_pressed()[K_w]):
+            if (pyg.key.get_pressed()[K_w]) or (pyg.key.get_pressed()[K_UP]):
                 player.move(0, -1 * player.speed)
-            if (pyg.key.get_pressed()[K_s]):
+            if (pyg.key.get_pressed()[K_s]) or (pyg.key.get_pressed()[K_DOWN]):
                 player.move(0, 1 * player.speed)
-            if (pyg.key.get_pressed()[K_a]):
+            if (pyg.key.get_pressed()[K_a]) or (pyg.key.get_pressed()[K_LEFT]):
                 player.move(-1 * player.speed, 0)
-            if (pyg.key.get_pressed()[K_d]):
+            if (pyg.key.get_pressed()[K_d]) or (pyg.key.get_pressed()[K_RIGHT]):
                 player.move(1 * player.speed, 0)
             while player.playerPoint[0]  - playerWidth/2 - 12< xoffset:
                 player.move(1, 0)
