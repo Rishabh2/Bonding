@@ -1,4 +1,5 @@
 import math
+
 def distance(point, line1, line2):
     a = line2[1] - line1[1] / (line2[0] - line1[0])
     b = line1[1] - line1[0] * a

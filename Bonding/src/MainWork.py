@@ -3,6 +3,7 @@ import Player
 import Ribbon
 import random
 import Floor
+import Room
 import pygame as pyg
 pyg.init()
 
@@ -11,8 +12,15 @@ screenHeight = 720
 Player.health = 100
 FPS = 60
 
-floor = Floor.Floor()
-floor.printgrid()
-
+screen = pyg.display.set_mode([screenWidth, screenHeight])
+pyg.display.set_caption("Map Test")
+floor = Floor.Floor(10,15)
+for row in range(len(floor.rooms)):
+    for col in range(len(floor.rooms[row])):
+        floor.rooms[row][col].mapdraw(row, col, 60, 10, screen)
+        
+pyg.display.update()
+pyg.time.delay(3000)
 def mainLoop():
     pass
+
