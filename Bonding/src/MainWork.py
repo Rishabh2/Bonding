@@ -76,6 +76,8 @@ def mainLoop():
                     player .move(0, 1)
                 while player.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
                     player.move(0, -1)
+            else:
+                player.playerPoint(screenWidth * 1 / 4, screenHeight)
             
             #player two handling
             if player2.living == True:
@@ -95,6 +97,8 @@ def mainLoop():
                     player2.move(0, 1)
                 while player2.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
                     player2.move(0, -1)
+            else:
+                player2.playerPoint(screenWidth * 3 / 4, screenHeight)
         pyg.display.update()
 
 mainLoop()
