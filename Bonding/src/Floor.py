@@ -68,6 +68,3 @@ class Floor(object):
                 current = roomStack.pop()
         
         self.bossRoom = self.longestPath((0, 0), [(0, 0)])[-1]
-                
-        
-
