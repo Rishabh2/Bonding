@@ -35,7 +35,7 @@ screen.blit(playerImage, (playerPoint[0] - 50, playerPoint[1] - 75/2))
 screen.blit(player2Image, (playerPoint[0] - 50, playerPoint[1] - 75/2))
 player = Player.Player(0, 0, 100, 50, screenWidth * 1 / 4, screenHeight)
 player2 = Player.Player(0, 0, 100, 50, screenWidth * 3 / 4, screenHeight)
-
+ribbon = Ribbon.Ribbon(player, player2)
 def drawBorder():
     pyg.draw.rect(screen, pyg.Color("white"), pyg.Rect(xoffset, yoffset, totalwidth, totalheight))
     
@@ -52,6 +52,7 @@ def mainLoop():
                 screen.blit(tileImage, [xoffset + col * tileSize, yoffset + row * tileSize])
         screen.blit(playerImage, (player.playerPoint[0] - 50, player.playerPoint[1] - 72/2))
         screen.blit(player2Image, (player2.playerPoint[0] - 50, player2.playerPoint[1] - 72/2))
+        ribbon = pyg.draw.line(screen, Color('red'), player.playerPoint, player2.playerPoint, 3)
         for e in events:
             #player one handling
             if (pyg.key.get_pressed()[K_w]):

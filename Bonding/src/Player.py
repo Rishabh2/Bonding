@@ -2,7 +2,7 @@ class Player(object):
     '''
     Class for the player objects
     '''
-  
+    import Ribbon
     
     def __init__(self, dx, dy, health, speed, screenWidth, screenHeight):
         self.health = health

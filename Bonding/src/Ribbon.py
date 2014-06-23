@@ -1,19 +1,14 @@
 from Player import *
 from math import *
-from zellegraphics import *
 import Enemy
 import pygame as pyg
 
-class ribbonAttack(object):
+class Ribbon(object):
         def __init__(self, playerOne, playerTwo):
       
             self.playOne = playerOne
             self.playTwo = playerTwo
-        
-        def ribbonForm(self, p1, p2):
-            ribbon = Line(self.player, self.playTwo)
-            ribbon.setOutline("red")
-            ribbon.setFill("red")
+            
 
 
         def getDistance(self):
@@ -24,3 +19,4 @@ class ribbonAttack(object):
             distance = round(distance, 1)
             damage = distance
             enemy.health -= damage
+            
