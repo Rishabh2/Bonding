@@ -3,9 +3,10 @@ import random
     
 class Floor(object):
 
-    def __init__(self, rows, cols):
-        self.rooms = [[Room.Room(row, col) for col in range(cols)] for row in range(rows)]
-        current = [0,0]
+    def __init__(self, rows, cols, tileRows, tileCols):
+        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)]) for col in range(cols)] for row in range(rows)]
+        self.currentRoom = [0, 0]
+        current = [0, 0]
         roomStack = []
         totalRooms = rows * cols
         visitedRooms = 1
