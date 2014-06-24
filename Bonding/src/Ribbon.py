@@ -4,18 +4,19 @@ import Enemy
 import pygame as pyg
 
 class Ribbon(object):
-        def __init__(self, playerOne, playerTwo):
+        def __init__(self, playerOne, playerTwo, damageMod):
       
             self.playOne = playerOne
             self.playTwo = playerTwo
+            self.damamod = damageMod
             
 
-        def getDistance(self):
-            return sqrt(((self.playTwo[0] - self.playOne[0]) ** 2) + ((self.playTwo[1] - self.playOne[1]) ** 2))
+
 
         def getDamage(self):
             distance = getDistance(self.playOne, self.playTwo)
             distance = round(distance, 1)
-            damage = distance
+            damage = distance * damamod
             enemy.health -= damage
+            
             
