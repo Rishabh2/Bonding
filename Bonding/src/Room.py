@@ -3,7 +3,8 @@ import pygame
 
 class Room(object):
     
-    def __init__(self, floorRow, floorCol, tileRows, tileCols, layout):
+    def __init__(self, floorRow, floorCol, tileRows, tileCols, layout, beenVisited):
+        self.beenVisited = beenVisited
         self.floorRow = floorRow
         self.floorCol = floorCol
         self.doors = [False, False, False, False]  # N,E,S,W
