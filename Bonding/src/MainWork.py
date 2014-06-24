@@ -5,13 +5,13 @@ import random
 import Floor
 import Room
 
-#all pygame functions
+# all pygame functions
 import pygame as pyg
 from pygame.locals import *
 pyg.init()
 
-screenWidth = 1280
-screenHeight = 720
+screenWidth = 1300
+screenHeight = 800
 FPS = 60
 roomRows = 10
 roomCols = 10
@@ -30,11 +30,11 @@ player2Image = pyg.image.load("Player.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
 pyg.display.set_caption("Map Test")
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
-playerPoint = (screenWidth//2 + 100 // 2, screenHeight//2 + 75)
-screen.blit(playerImage, (playerPoint[0] - 50, playerPoint[1] - 75/2))
-screen.blit(player2Image, (playerPoint[0] - 50, playerPoint[1] - 75/2))
-player = Player.Player(0, 0, 100, 10, screenWidth * 1 / 4, screenHeight, 100, True)
-player2 = Player.Player(0, 0, 100, 10, screenWidth * 3 / 4, screenHeight, 100, True)
+playerPoint = (screenWidth // 2 + 100 // 2, screenHeight // 2 + 75)
+screen.blit(playerImage, (playerPoint[0] - playerWidth / 2, playerPoint[1] - playerHeight / 2))
+screen.blit(player2Image, (playerPoint[0] - playerWidth / 2, playerPoint[1] - playerHeight / 2))
+player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
+player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 ribbon = Ribbon.Ribbon(player, player2)
 def drawBorder():
     pyg.draw.rect(screen, pyg.Color("white"), pyg.Rect(xoffset, yoffset, totalwidth, totalheight))
@@ -50,15 +50,15 @@ def mainLoop():
         for row in range(tileRows):
             for col in range(tileCols):
                 screen.blit(tileImage, [xoffset + col * tileSize, yoffset + row * tileSize])
-        screen.blit(playerImage, (player.playerPoint[0] - 50, player.playerPoint[1] - 72/2))
-        screen.blit(player2Image, (player2.playerPoint[0] - 50, player2.playerPoint[1] - 72/2))
+        screen.blit(playerImage, (player.playerPoint[0] - playerWidth / 2, player.playerPoint[1] - playerHeight / 2))
+        screen.blit(player2Image, (player2.playerPoint[0] - playerWidth / 2, player2.playerPoint[1] - playerHeight / 2))
         if player.living == True:
             if player2.living == True:
-                #deals with damage and all
+                # deals with damage and all
                 ribbon = pyg.draw.line(screen, Color('red'), player.playerPoint, player2.playerPoint, 3)
         
         
-            #player one handling
+            # player one handling
         if player.living == True:
             if (pyg.key.get_pressed()[K_w]):
                 player.move(0, -1 * player.speed)
@@ -68,19 +68,19 @@ def mainLoop():
                 player.move(-1 * player.speed, 0)
             if (pyg.key.get_pressed()[K_d]):
                 player.move(1 * player.speed, 0)
-            while player.playerPoint[0]  - playerWidth/2 - 12< xoffset:
+            while player.playerPoint[0] - playerWidth / 2 < xoffset:
                 player.move(1, 0)
-            while player.playerPoint[0]  + playerWidth/2 - 13> totalwidth +  xoffset:
+            while player.playerPoint[0] + playerWidth / 2 > totalwidth + xoffset:
                 player.move(-1, 0)
-            while player.playerPoint[1] - playerHeight/2 + 14 < yoffset:
+            while player.playerPoint[1] - playerHeight / 2 < yoffset:
                 player .move(0, 1)
-            while player.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
+            while player.playerPoint[1] + playerHeight / 2 > totalheight + yoffset:
                 player.move(0, -1)
         else:
             player.playerPoint(screenWidth * 1 / 4, screenHeight)
         
             
-            #player two handling
+            # player two handling
         if player2.living == True:
             if (pyg.key.get_pressed()[K_UP]):
                  player2.move(0, -1 * player2.speed)
@@ -90,20 +90,20 @@ def mainLoop():
                 player2.move(-1 * player2.speed, 0)
             if (pyg.key.get_pressed()[K_RIGHT]):
                 player2.move(1 * player2.speed, 0)
-            while player2.playerPoint[0]  - playerWidth/2 - 12 < xoffset:
+            while player2.playerPoint[0] - playerWidth / 2 < xoffset:
                 player2.move(1, 0)
-            while player2.playerPoint[0]  + playerWidth/2 - 13 > totalwidth +  xoffset:
+            while player2.playerPoint[0] + playerWidth / 2 > totalwidth + xoffset:
                 player2.move(-1, 0)
-            while player2.playerPoint[1] - playerHeight/2 + 14 < yoffset:
+            while player2.playerPoint[1] - playerHeight / 2 < yoffset:
                 player2.move(0, 1)
-            while player2.playerPoint[1] + playerHeight/2 + 13 > totalheight + yoffset:
+            while player2.playerPoint[1] + playerHeight / 2 > totalheight + yoffset:
                 player2.move(0, -1)
         else:
             player2.playerPoint(screenWidth * 3 / 4, screenHeight)
             
         for e in events:
-            if (pyg.key.get_pressed()[K_BACKSPACE]):
-                toDeal = (player.limit - player.health)/2
+            if (pyg.key.get_pressed()[K_SPACE]):
+                toDeal = (player.limit - player.health) / 2
                 if toDeal <= 0:
                     pass
                 else:
@@ -111,7 +111,7 @@ def mainLoop():
                     player.addHealth(toDeal)
                     
             if (pyg.key.get_pressed()[K_KP0]):
-                toDeal = (player2.limit - player2.health)/2
+                toDeal = (player2.limit - player2.health) / 2
                 if toDeal <= 0:
                     pass
                 else:
