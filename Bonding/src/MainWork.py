@@ -103,7 +103,7 @@ def mainLoop():
             player2.playerPoint(screenWidth * 3 / 4, screenHeight)
             
         for e in events:
-            if sqrt(((player2.playerPoint[0] - player.playerPoint[0]) ** 2) + ((player2.playerPoint[1] - player.playerPoint[1]) ** 2)) <= 1:
+            if sqrt(((player2.playerPoint[0] - player.playerPoint[0]) ** 2) + ((player2.playerPoint[1] - player.playerPoint[1]) ** 2)) <= 2:
                 if (pyg.key.get_pressed()[K_SPACE]):
                     toDeal = (player.limit - player.health) / 2
                     if toDeal <= 0:
