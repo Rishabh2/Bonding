@@ -4,6 +4,7 @@ import Ribbon
 import random
 import Floor
 import Room
+from math import *
 
 # all pygame functions
 import pygame as pyg
@@ -102,21 +103,22 @@ def mainLoop():
             player2.playerPoint(screenWidth * 3 / 4, screenHeight)
             
         for e in events:
-            if (pyg.key.get_pressed()[K_SPACE]):
-                toDeal = (player.limit - player.health) / 2
-                if toDeal <= 0:
-                    pass
-                else:
-                    player2.damageTake(toDeal)
-                    player.addHealth(toDeal)
+            if sqrt(((player2.playerPoint[0] - player.playerPoint[0]) ** 2) + ((player2.playerPoint[1] - player.playerPoint[1]) ** 2)) <= 1:
+                if (pyg.key.get_pressed()[K_SPACE]):
+                    toDeal = (player.limit - player.health) / 2
+                    if toDeal <= 0:
+                        pass
+                    else:
+                        player2.damageTake(toDeal)
+                        player.addHealth(toDeal)
                     
-            if (pyg.key.get_pressed()[K_KP0]):
-                toDeal = (player2.limit - player2.health) / 2
-                if toDeal <= 0:
-                    pass
-                else:
-                    player.damageTake(toDeal)
-                    player2.addHealth(toDeal)
+                if (pyg.key.get_pressed()[K_KP0]):
+                    toDeal = (player2.limit - player2.health) / 2
+                    if toDeal <= 0:
+                        pass
+                    else:
+                        player.damageTake(toDeal)
+                        player2.addHealth(toDeal)
         pyg.display.update()
 
 mainLoop()

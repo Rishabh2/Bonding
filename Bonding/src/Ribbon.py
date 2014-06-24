@@ -10,8 +10,7 @@ class Ribbon(object):
             self.playTwo = playerTwo
             
 
-        def getDistance(self):
-            return sqrt(((self.playTwo[0] - self.playOne[0]) ** 2) + ((self.playTwo[1] - self.playOne[1]) ** 2))
+
 
         def getDamage(self):
             distance = getDistance(self.playOne, self.playTwo)
