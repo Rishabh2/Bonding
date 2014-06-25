@@ -38,7 +38,7 @@ class Floor(object):
 
     def __init__(self, rows, cols, tileRows, tileCols):
         self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], True) for col in range(cols)] for row in range(rows)]
-        self.currentRoom = (0, 0)
+        self.currentRoom = [0, 0]
         current = (0, 0)
         roomStack = []
         totalRooms = rows * cols
@@ -68,3 +68,6 @@ class Floor(object):
                 current = roomStack.pop()
         
         self.bossRoom = self.longestPath((0, 0), [(0, 0)])[-1]
+        
+    def getCurrentRoom(self):
+        return self.rooms[self.currentRoom[0]][self.currentRoom[1]]

@@ -39,6 +39,8 @@ cornerImage = pyg.image.load("Corner.png")
 cornerImage2 = pyg.image.load("Corner2.png")
 cornerImage3 = pyg.image.load("Corner3.png")
 cornerImage4 = pyg.image.load("Corner4.png")
+CDoorImage = pyg.image.load("CDoor.png")
+CDoorImage2 = pyg.image.load("CDoor2.png")
 wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
@@ -85,6 +87,14 @@ def mainLoop():
         for i in range(tileRows):
             screen.blit(vwallImage, (xoffset, yoffset + tileSize * (i + 1)))
             screen.blit(vwallImage, (xoffset + tileSize + tileWidth, yoffset + tileSize * (i + 1)))
+        if floor.getCurrentRoom().doors[0]:
+            screen.blit(CDoorImage, (xoffset + tileSize + tileSize * (tileCols // 2), yoffset))
+        if floor.getCurrentRoom().doors[1]:
+            screen.blit(CDoorImage2, (xoffset + tileSize + tileWidth, yoffset + tileSize * (tileRows // 2)))
+        if floor.getCurrentRoom().doors[2]:
+            screen.blit(CDoorImage, (xoffset + tileSize + tileSize * (tileCols // 2), yoffset + tileSize + tileHeight))
+        if floor.getCurrentRoom().doors[3]:
+            screen.blit(CDoorImage2, (xoffset, yoffset + tileSize * (tileRows // 2)))
         screen.blit(playerImage, (player.playerPoint[0] - playerWidth / 2, player.playerPoint[1] - playerHeight / 2))
         screen.blit(player2Image, (player2.playerPoint[0] - playerWidth / 2, player2.playerPoint[1] - playerHeight / 2))
         if player.living == True:
