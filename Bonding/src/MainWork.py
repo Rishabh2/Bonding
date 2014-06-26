@@ -56,8 +56,9 @@ player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
 player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 ribbon = Ribbon.Ribbon(player, player2, 1)
 def spawn():
-    player.playerPoint = (screenWidth * 1 / 4, screenHeight)
-    player2.playerPoint = (screenWidth * 3 / 4, screenHeight)
+    player.playerPoint = (screenWidth * 1 / 4 + xoffset, screenHeight / 2 + yoffset)
+    player2.playerPoint = (screenWidth * 3 / 4 + xoffset, screenHeight / 2 + yoffset)
+    floor.getCurrentRoom().beenVisited = True
     
 def mainLoop():
     while True:
@@ -187,4 +188,5 @@ def mainLoop():
                     
         pyg.display.update()
 
+spawn()
 mainLoop()

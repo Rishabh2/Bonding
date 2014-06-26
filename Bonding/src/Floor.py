@@ -37,7 +37,7 @@ class Floor(object):
         return paths.get()
 
     def __init__(self, rows, cols, tileRows, tileCols):
-        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], True) for col in range(cols)] for row in range(rows)]
+        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], False) for col in range(cols)] for row in range(rows)]
         self.currentRoom = [0, 0]
         current = (0, 0)
         roomStack = []
