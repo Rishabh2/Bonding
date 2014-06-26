@@ -4,6 +4,7 @@ import Ribbon
 import random
 import Floor
 import Room
+import Calculator
 from math import *
 
 # all pygame functions
@@ -56,6 +57,8 @@ screen.blit(playerImage, (playerPoint[0] - playerWidth / 2, playerPoint[1] - pla
 screen.blit(player2Image, (playerPoint[0] - playerWidth / 2, playerPoint[1] - playerHeight / 2))
 player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
 player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
+enemy = Enemy.Enemy(10, 10, 15, (0, 0), 5)
+
 ribbon = Ribbon.Ribbon(player, player2, 1)
 def spawn():
     player.playerPoint = (screenWidth * 1 / 4 + xoffset, screenHeight / 2 + yoffset)
@@ -108,8 +111,11 @@ def mainLoop():
         if player.living == True:
             if player2.living == True:
                 # deals with damage and all
-                ribbon = pyg.draw.line(screen, Color('red'), player.playerPoint, player2.playerPoint, 3)
-        
+                pyg.draw.line(screen, Color('red'), player.playerPoint, player2.playerPoint, 3)
+        if Calculator.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) <= 5:
+            ribbon.doDamage(player.playerPoint, player2.playerPoint)
+                
+            
         
             # player one handling
         if player.living == True:

@@ -2,14 +2,15 @@ import Player
 from math import *
 
 class Enemy(object):
-    def __init__(self, health, damageDealer, speed, point):
+    def __init__(self, health, damageDealer, speed, point, size):
         '''
         Constructor
         '''
         self.health = health
         self.damage = damageDealer
         self.speed = speed
-        self.enemyPoint = point
+        self.point = point
+        self.size = size
     def getDistance(p1, p2):
         return sqrt(((p2.getX() - p1.getX()) ** 2) + ((p2.getY() - p1.getY()) ** 2))
     

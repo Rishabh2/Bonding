@@ -1,20 +1,16 @@
-from Player import *
-from math import *
-import Enemy
-import pygame as pyg
+import Calculator
 
 class Ribbon(object):
+        
         def __init__(self, playerOne, playerTwo, damageMod):
       
             self.playOne = playerOne
             self.playTwo = playerTwo
             self.damamod = damageMod
-            
+            self.Calculator = Calculator.Calculator()
 
-
-
-        def getDamage(self):
-            distance = getDistance(self.playOne, self.playTwo)
+        def doDamage(self, playOne, playTwo, enemy):
+            distance = self.Calculator.distance(playOne, playTwo)
             distance = round(distance, 1)
             damage = distance * damamod
             enemy.health -= damage
