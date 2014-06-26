@@ -6,7 +6,6 @@ import Floor
 import Room
 from math import *
 
-
 # all pygame functions
 import pygame as pyg
 from pygame.locals import *
@@ -24,7 +23,7 @@ totalRows = 8
 totalCols = 15
 playerHeight = 75
 playerWidth = 50
-backstabMod = .75 #must be <1, how much damage you keep per backstab
+backstabMod = .75  # must be <1, how much damage you keep per backstab
 tileWidth = tileSize * tileCols
 tileHeight = tileSize * tileRows
 totalWidth = tileSize * totalCols
@@ -34,7 +33,7 @@ yoffset = (screenHeight - totalHeight) * 3 / 4
 mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
-#image assigning
+# image assigning
 tileImage = pyg.image.load("Tile.png")
 playerImage = pyg.image.load("Player.png")
 player2Image = pyg.image.load("Player.png")
