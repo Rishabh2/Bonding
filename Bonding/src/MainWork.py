@@ -34,9 +34,11 @@ mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
 # image assigning
+spriteRowSize = 0
+spriteCollumSize = 0
 tileImage = pyg.image.load("Tile.png")
-playerImage = pyg.image.load("Player.png")
-player2Image = pyg.image.load("Player.png")
+playerImage = pyg.image.load("Player1.png")
+player2Image = pyg.image.load("Player2.png")
 cornerImage = pyg.image.load("Corner.png")
 cornerImage2 = pyg.image.load("Corner2.png")
 cornerImage3 = pyg.image.load("Corner3.png")
