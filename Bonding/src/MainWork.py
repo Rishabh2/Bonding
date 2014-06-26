@@ -23,6 +23,7 @@ totalRows = 8
 totalCols = 15
 playerHeight = 75
 playerWidth = 50
+backstabMod = .75 #must be <1, how much damage you keep per backstab
 tileWidth = tileSize * tileCols
 tileHeight = tileSize * tileRows
 totalWidth = tileSize * totalCols
@@ -32,6 +33,7 @@ yoffset = (screenHeight - totalHeight) * 3 / 4
 mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
+#image assigning
 tileImage = pyg.image.load("Tile.png")
 playerImage = pyg.image.load("Player.png")
 player2Image = pyg.image.load("Player.png")
@@ -45,6 +47,7 @@ wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
 pyg.display.set_caption("Map Test")
+
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
 playerPoint = (screenWidth // 2 + 100 // 2, screenHeight // 2 + 75)
 screen.blit(playerImage, (playerPoint[0] - playerWidth / 2, playerPoint[1] - playerHeight / 2))
@@ -68,11 +71,13 @@ def mainLoop():
                     if toDeal > player2.health:
                         player2.damageTake(toDeal)
                         player.addHealth(toDeal)
+                        ribbon.damamod = ribbon.damammod * backstabMod
                 if e.key == pyg.K_KP0:
                     toDeal = (player2.limit - player2.health) / 2
                     if toDeal > player.health:
                         player.damageTake(toDeal)
                         player2.addHealth(toDeal)
+                        ribbon.damamod = ribbon.damammod * backstabMod
         screen.fill([0, 0, 0])
         for row in range(tileRows):
             for col in range(tileCols):
