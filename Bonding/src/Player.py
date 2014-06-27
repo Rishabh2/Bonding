@@ -30,11 +30,5 @@ class Player(object):
         self.health += health
         if self.health > self.limit:
             self.health = self.limit
-    def kill(self):
-        self.health = 0
-        self.living = False
-    def damageTake(self, damage):
-        self.health -= damage
-        if self.health <= 0:
-            kill()
+        self.health = round(self.health, 0)
             

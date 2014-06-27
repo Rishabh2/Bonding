@@ -12,7 +12,7 @@ import pygame as pyg
 from pygame.locals import *
 pyg.init()
 
-
+healthFont = pyg.font.SysFont("Arial", 50)
 screenWidth = 1300
 screenHeight = 800
 FPS = 60
@@ -53,7 +53,7 @@ pyg.display.set_caption("Map Test")
 calc = Calculator.Calculator()
 
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
-player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
+player = Player.Player(10, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
 player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 
 ribbon = Ribbon.Ribbon(player, player2, 1)
@@ -78,7 +78,10 @@ def draw():
                     pyg.draw.line(screen, [255, 255, 255], ((x + 1) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), ((x) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer))
                 if not floor.rooms[y][x].doors[3]:
                     pyg.draw.line(screen, [255, 255, 255], (x * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), (x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer))
-                
+    
+    screen.blit(healthFont.render(str(player.health), 1, [255 - 255 * player.health / player.limit, 255 * player.health / player.limit, 0]), (xoffset, yoffset / 3))
+    screen.blit(healthFont.render(str(player2.health), 1, [255 - 255 * player2.health / player2.limit, 255 * player2.health / player2.limit, 0]), (xoffset + tileWidth + tileSize, yoffset / 3))
+    
     for row in range(tileRows):
         for col in range(tileCols):
             screen.blit(tileImage, (xoffset + (col + 1) * tileSize, yoffset + (row + 1) * tileSize))
@@ -107,6 +110,7 @@ def draw():
     screen.blit(player2Image, (player2.playerPoint[0] - playerWidth / 2, player2.playerPoint[1] - playerHeight / 2), (player2.frame * (playerWidth + playerBuffer), player2.dir * playerHeight, playerWidth, playerHeight))
         
     pyg.display.update()
+    
 def mainLoop():
     while True:
         events = pyg.event.get()
@@ -116,16 +120,16 @@ def mainLoop():
             if e.type == pyg.KEYDOWN:
                 if e.key == pyg.K_SPACE:
                     toDeal = (player.limit - player.health) / 2
-                    if toDeal > player2.health:
-                        player2.damageTake(toDeal)
+                    if toDeal < player2.health:
+                        player2.addHealth(-toDeal)
                         player.addHealth(toDeal)
-                        ribbon.damamod = ribbon.damammod * backstabMod
+                        ribbon.damamod = ribbon.damamod * backstabMod
                 if e.key == pyg.K_KP0:
                     toDeal = (player2.limit - player2.health) / 2
-                    if toDeal > player.health:
-                        player.damageTake(toDeal)
+                    if toDeal < player.health:
+                        player.addHealth(-toDeal)
                         player2.addHealth(toDeal)
-                        ribbon.damamod = ribbon.damammod * backstabMod
+                        ribbon.damamod = ribbon.damamod * backstabMod
             
         
             # player one handling
