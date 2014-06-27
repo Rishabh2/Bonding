@@ -61,6 +61,8 @@ def spawn():
     player.playerPoint = (screenWidth * 1 / 4 + xoffset, screenHeight / 2 + yoffset)
     player2.playerPoint = (screenWidth * 3 / 4 + xoffset, screenHeight / 2 + yoffset)
     floor.getCurrentRoom().beenVisited = True
+    draw()
+    pyg.time.delay(500)
     
 def draw():
     screen.fill([0, 0, 0])
