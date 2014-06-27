@@ -12,6 +12,7 @@ import pygame as pyg
 from pygame.locals import *
 pyg.init()
 
+
 screenWidth = 1300
 screenHeight = 800
 FPS = 60
