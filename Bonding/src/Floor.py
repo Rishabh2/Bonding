@@ -39,7 +39,7 @@ class Floor(object):
     def __init__(self, rows, cols, tileRows, tileCols):
         self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], False) for col in range(cols)] for row in range(rows)]
         self.currentRoom = [0, 0]
-        current = (0, 0)
+        current = (random.randrange(rows), random.randrange(cols))
         roomStack = []
         totalRooms = rows * cols
         visitedRooms = 1
