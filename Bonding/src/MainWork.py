@@ -70,15 +70,15 @@ def draw():
             if floor.rooms[y][x].beenVisited:
                 if (x == floor.currentRoom[1] and y == floor.currentRoom[0]):
                     pyg.draw.rect(screen, pyg.Color("yellow"), Rect((x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer), (roomSize, roomSize)))
-                    if not floor.rooms[y][x].doors[0]:
-                        pyg.draw.line(screen, [255, 255, 255], (x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer), ((x + 1) * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer))
-                    if not floor.rooms[y][x].doors[1]:
-                        pyg.draw.line(screen, [255, 255, 255], ((x + 1) * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer), ((x + 1) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer))
-                    if not floor.rooms[y][x].doors[2]:
-                        pyg.draw.line(screen, [255, 255, 255], ((x + 1) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), ((x) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer))
-                    if not floor.rooms[y][x].doors[3]:
-                        pyg.draw.line(screen, [255, 255, 255], (x * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), (x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer))
-                    
+                if not floor.rooms[y][x].doors[0]:
+                    pyg.draw.line(screen, [255, 255, 255], (x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer), ((x + 1) * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer))
+                if not floor.rooms[y][x].doors[1]:
+                    pyg.draw.line(screen, [255, 255, 255], ((x + 1) * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer), ((x + 1) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer))
+                if not floor.rooms[y][x].doors[2]:
+                    pyg.draw.line(screen, [255, 255, 255], ((x + 1) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), ((x) * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer))
+                if not floor.rooms[y][x].doors[3]:
+                    pyg.draw.line(screen, [255, 255, 255], (x * roomSize + (screenWidth - mapSize) / 2, (y + 1) * roomSize + mapBuffer), (x * roomSize + (screenWidth - mapSize) / 2, y * roomSize + mapBuffer))
+                
     for row in range(tileRows):
         for col in range(tileCols):
             screen.blit(tileImage, (xoffset + (col + 1) * tileSize, yoffset + (row + 1) * tileSize))
