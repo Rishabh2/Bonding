@@ -18,6 +18,8 @@ class Enemy(object):
         distanceToP1 = getDistance(self, player1)
         distanceToP2 = getDistance(self, player2)
         if distanceToP1 < distanceToP2:
-            pass
+            return attackP1
+        if distanceToP1 > distanceToP2:
+            return attackP2 
         else:
-            pass    
+            return attackSomething
