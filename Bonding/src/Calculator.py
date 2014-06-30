@@ -14,8 +14,8 @@ class Calculator(object):
         if line1[1] == line2[1]:
             return abs(point[1] - line1[1])
         a = (line2[1] - line1[1]) / (line2[0] - line1[0])
-        b = line1[1] - line1[0] * a
-        c = -1 / a
+        c = line1[1] - line1[0] * a
+        b = -1 / a
         d = point[1] - point[0] * c
         return abs(self.distance((((d - c) / (a - b)), (a * ((d - c) / (a - b)) + c)), point))
     

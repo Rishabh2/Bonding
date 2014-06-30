@@ -2,10 +2,8 @@ import Calculator
 
 class Ribbon(object):
         
-        def __init__(self, playerOne, playerTwo, damageMod):
+        def __init__(self, damageMod=1):
       
-            self.playOne = playerOne
-            self.playTwo = playerTwo
             self.damamod = damageMod
             self.Calculator = Calculator.Calculator()
 

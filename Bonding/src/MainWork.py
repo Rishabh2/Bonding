@@ -24,7 +24,7 @@ tileCols = 13
 tileSize = 75
 totalRows = 8
 totalCols = 15
-backstabMod = .75  # must be <1, how much damage you keep per backstab
+backstabMod = .9  # must be <1, how much damage you keep per backstab
 tileWidth = tileSize * tileCols
 tileHeight = tileSize * tileRows
 totalWidth = tileSize * totalCols
@@ -60,12 +60,12 @@ floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
 player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
 player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 
-ribbon = Ribbon.Ribbon(player, player2, 1)
+ribbon = Ribbon.Ribbon()
 
 def end():
     draw()
     red = 0
-    while red <= 255:
+    while red <= 150:
         redImage.set_alpha(red)
         screen.blit(redImage, (0, 0))
         pyg.display.update()
@@ -200,7 +200,6 @@ def act():
     # enemy handling
     for enemy in floor.getCurrentRoom().enemies:
         enemy.move(player.playerPoint, player2.playerPoint)
-        print(str(calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint)) + "distance")
         if calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius:
             ribbon.doDamage(player.playerPoint, player2.playerPoint, enemy)
             print(enemy.health)
@@ -210,11 +209,12 @@ def act():
             player.addHealth(-enemy.damage)
         if calc.distance(player2.playerPoint, enemy.point) < enemyRadius:
             player2.addHealth(-enemy.damage)
+ 
             
-    if player.health < 0:
+    if player.health <= 0:
         player.health = 0
         end()
-    if player2.health < 0:
+    if player2.health <= 0:
         player2.health = 0
         end()
         
