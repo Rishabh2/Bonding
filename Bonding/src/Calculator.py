@@ -16,7 +16,7 @@ class Calculator(object):
         a = (line2[1] - line1[1]) / (line2[0] - line1[0])
         c = line1[1] - line1[0] * a
         b = -1 / a
-        d = point[1] - point[0] * c
+        d = point[1] - point[0] * b
         return abs(self.distance((((d - c) / (a - b)), (a * ((d - c) / (a - b)) + c)), point))
     
     def moveTo(self, point1, point2, distance):
