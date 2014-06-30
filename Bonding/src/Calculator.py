@@ -23,4 +23,7 @@ class Calculator(object):
         theta = math.atan2(point2[1] - point1[1], point2[0] - point1[0])
         return (point1[0] + distance * math.cos(theta), point1[1] + distance * math.sin(theta))
     
+    def between(self, p1, l1, l2):
+        return (l1[0] < p1[0] < l2[0] or l1[0] > p1[0] > l2[0]) and (l1[1] < p1[1] < l2[1] or l1[1] > p1[1] > l2[1])
+    
 

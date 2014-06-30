@@ -200,7 +200,7 @@ def act():
     # enemy handling
     for enemy in floor.getCurrentRoom().enemies:
         enemy.move(player.playerPoint, player2.playerPoint)
-        if calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius:
+        if calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius and calc.between(enemy.point, player.playerPoint, player2.playerPoint):
             ribbon.doDamage(player.playerPoint, player2.playerPoint, enemy)
             print(enemy.health)
             if enemy.health <= 0:
