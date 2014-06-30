@@ -26,6 +26,7 @@ class Player(object):
         else:
             self.frame == 0
         return self.playerPoint
+    
     def addHealth(self, health):
         self.health += health
         if self.health > self.limit:

@@ -1,6 +1,7 @@
 import Room
 import random
 import queue
+import Enemy
 
 class ListQueue(queue.PriorityQueue):
     # @overrides(queue.PriorityQueue)
@@ -37,8 +38,12 @@ class Floor(object):
         return paths.get()
 
     def __init__(self, rows, cols, tileRows, tileCols):
-        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], False) for col in range(cols)] for row in range(rows)]
+        possibleEnemies1 = [Enemy.Enemy(100, 2, 9, (300, 300), False), Enemy.Enemy(200, 2, 7, (300, 300), False), Enemy.Enemy(70, 4, 9, (300, 300), False)]
+        possibleEnemies2 = [Enemy.Enemy(100, 2, 9, (650, 300), True), Enemy.Enemy(200, 2, 7, (650, 300), True), Enemy.Enemy(70, 4, 9, (650, 300), True)]
+        possibleEnemies3 = [Enemy.Enemy(100, 2, 9, (1000, 300), True), Enemy.Enemy(200, 2, 7, (1000, 300), False), Enemy.Enemy(70, 4, 9, (1000, 300), True)]
+        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], False, [possibleEnemies1[random.randrange(3)], possibleEnemies2[random.randrange(3)], possibleEnemies3[random.randrange(3)]]) for col in range(cols)] for row in range(rows)]
         self.currentRoom = [0, 0]
+        self.rooms[self.currentRoom[0]][self.currentRoom[1]].enemies = []
         current = (random.randrange(rows), random.randrange(cols))
         roomStack = []
         totalRooms = rows * cols
@@ -68,6 +73,7 @@ class Floor(object):
                 current = roomStack.pop()
         
         self.bossRoom = self.longestPath((0, 0), [(0, 0)])[-1]
+        self.rooms[self.bossRoom[0]][self.bossRoom[1]].enemies = [Enemy.Enemy(5000, 20, 9, (650, 400), True)]
         
     def getCurrentRoom(self):
         return self.rooms[self.currentRoom[0]][self.currentRoom[1]]

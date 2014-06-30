@@ -12,7 +12,7 @@ class Ribbon(object):
         def doDamage(self, playOne, playTwo, enemy):
             distance = self.Calculator.distance(playOne, playTwo)
             distance = round(distance, 1)
-            damage = distance * damamod
+            damage = self.damamod * 1000 / distance
             damage = round(damage, 0)
             enemy.health -= damage
             

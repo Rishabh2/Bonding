@@ -3,12 +3,13 @@ import pygame
 
 class Room(object):
     
-    def __init__(self, floorRow, floorCol, tileRows, tileCols, layout, beenVisited):
+    def __init__(self, floorRow, floorCol, tileRows, tileCols, layout, beenVisited, enemies):
         self.beenVisited = beenVisited
         self.floorRow = floorRow
         self.floorCol = floorCol
         self.doors = [False, False, False, False]  # N,E,S,W
         self.layout = [[Tile.Tile(layout[row][col]) for col in range(tileCols)] for row in range(tileRows)]
+        self.enemies = enemies
     
     def numDoors(self):
         return self.doors.count(True)

@@ -6,6 +6,7 @@ import Floor
 import Room
 import Calculator
 from math import *
+import sys
 
 # all pygame functions
 import pygame as pyg
@@ -33,6 +34,7 @@ yoffset = (screenHeight - totalHeight) * 3 / 4
 mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
+enemyRadius = 30
 # image assigning
 playerBuffer = 6
 playerWidth = 27
@@ -48,15 +50,28 @@ CDoorImage = pyg.image.load("CDoor.png")
 CDoorImage2 = pyg.image.load("CDoor2.png")
 wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
+bossImage = pyg.image.load("boss1.png")
+redImage = pyg.image.load("red.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
 pyg.display.set_caption("Map Test")
 calc = Calculator.Calculator()
 
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
-player = Player.Player(10, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
+player = Player.Player(100, 10, (screenWidth * 1 / 4, screenHeight), 100, True)
 player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 
 ribbon = Ribbon.Ribbon(player, player2, 1)
+
+def end():
+    draw()
+    red = 0
+    while red <= 255:
+        redImage.set_alpha(red)
+        screen.blit(redImage, (0, 0))
+        pyg.display.update()
+        red += 1
+    sys.exit()
+    
 def spawn():
     player.playerPoint = (screenWidth * 1 / 4 + xoffset, screenHeight / 2 + yoffset)
     player2.playerPoint = (screenWidth * 3 / 4 + xoffset, screenHeight / 2 + yoffset)
@@ -111,8 +126,99 @@ def draw():
     screen.blit(playerImage, (player.playerPoint[0] - playerWidth / 2, player.playerPoint[1] - playerHeight / 2), (player.frame * (playerWidth + playerBuffer), player.dir * playerHeight, playerWidth, playerHeight))
     screen.blit(player2Image, (player2.playerPoint[0] - playerWidth / 2, player2.playerPoint[1] - playerHeight / 2), (player2.frame * (playerWidth + playerBuffer), player2.dir * playerHeight, playerWidth, playerHeight))
         
+    for enemy in floor.getCurrentRoom().enemies:
+        screen.blit(bossImage, (enemy.point[0], enemy.point[1]))
+    
     pyg.display.update()
     
+def act():
+    # player one handling
+    if (pyg.key.get_pressed()[K_w]):
+        player.move(0, -1 * player.speed, 0)
+        if player.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player.playerPoint[1] <= tileSize + playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[0] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[0] -= 1
+            spawn()
+    if (pyg.key.get_pressed()[K_s]):
+        player.move(0, 1 * player.speed, 2)
+        if player.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player.playerPoint[1] >= tileSize + tileHeight - playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[2] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[0] += 1
+            spawn()
+    if (pyg.key.get_pressed()[K_a]):
+        player.move(-1 * player.speed, 0, 3)
+        if player.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player.playerPoint[0] <= tileSize + playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[3] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[1] -= 1
+            spawn()
+    if (pyg.key.get_pressed()[K_d]):
+        player.move(1 * player.speed, 0, 1)
+        if player.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player.playerPoint[0] >= tileSize + tileWidth - playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[1] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[1] += 1
+            spawn()
+    if not (pyg.key.get_pressed()[K_w] or pyg.key.get_pressed()[K_s] or pyg.key.get_pressed()[K_a] or pyg.key.get_pressed()[K_d]):
+        player.frame = 1
+    while player.playerPoint[0] - playerWidth / 2 < xoffset + tileSize:
+        player.move(1, 0, 3)
+    while player.playerPoint[0] + playerWidth / 2 > xoffset + tileSize + tileWidth:
+        player.move(-1, 0, 1)
+    while player.playerPoint[1] - playerHeight / 2 < yoffset + tileSize:
+        player .move(0, 1, 0)
+    while player.playerPoint[1] + playerHeight / 2 > yoffset + tileSize + tileHeight:
+        player.move(0, -1, 2)
+        
+    # player two handling
+    if (pyg.key.get_pressed()[K_UP]):
+         player2.move(0, -1 * player2.speed, 0)
+         if player2.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player2.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player2.playerPoint[1] <= tileSize + playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[0] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[0] -= 1
+            spawn()
+    if (pyg.key.get_pressed()[K_DOWN]):
+        player2.move(0, 1 * player2.speed, 2)
+        if player2.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player2.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player2.playerPoint[1] >= tileSize + tileHeight - playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[2] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[0] += 1
+            spawn()
+    if (pyg.key.get_pressed()[K_LEFT]):
+        player2.move(-1 * player2.speed, 0, 3)
+        if player2.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player2.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player2.playerPoint[0] <= tileSize + playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[3] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[1] -= 1
+            spawn()
+    if (pyg.key.get_pressed()[K_RIGHT]):
+        player2.move(1 * player2.speed, 0, 1)
+        if player2.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player2.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player2.playerPoint[0] >= tileSize + tileWidth - playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[1] and len(floor.getCurrentRoom().enemies) == 0:
+            floor.currentRoom[1] += 1
+            spawn()
+    if not (pyg.key.get_pressed()[K_UP] or pyg.key.get_pressed()[K_DOWN] or pyg.key.get_pressed()[K_LEFT] or pyg.key.get_pressed()[K_RIGHT]):
+        player2.frame = 1
+    while player2.playerPoint[0] - playerWidth / 2 < xoffset + tileSize:
+        player2.move(1, 0, 3)
+    while player2.playerPoint[0] + playerWidth / 2 > xoffset + tileSize + tileWidth:
+        player2.move(-1, 0, 1)
+    while player2.playerPoint[1] - playerHeight / 2 < yoffset + tileSize:
+        player2.move(0, 1, 0)
+    while player2.playerPoint[1] + playerHeight / 2 > yoffset + tileSize + tileHeight:
+        player2.move(0, -1, 2)
+        
+        
+    # enemy handling
+    for enemy in floor.getCurrentRoom().enemies:
+        enemy.move(player.playerPoint, player2.playerPoint)
+        print(str(calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint)) + "distance")
+        if calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius:
+            ribbon.doDamage(player.playerPoint, player2.playerPoint, enemy)
+            print(enemy.health)
+            if enemy.health <= 0:
+                floor.getCurrentRoom().enemies.remove(enemy)
+        if calc.distance(player.playerPoint, enemy.point) < enemyRadius:
+            player.addHealth(-enemy.damage)
+        if calc.distance(player2.playerPoint, enemy.point) < enemyRadius:
+            player2.addHealth(-enemy.damage)
+            
+    if player.health < 0:
+        player.health = 0
+        end()
+    if player2.health < 0:
+        player2.health = 0
+        end()
+        
+        
 def mainLoop():
     while True:
         events = pyg.event.get()
@@ -132,75 +238,8 @@ def mainLoop():
                         player.addHealth(-toDeal)
                         player2.addHealth(toDeal)
                         ribbon.damamod = ribbon.damamod * backstabMod
-            
-        
-            # player one handling
-        if player.living == True:
-            if (pyg.key.get_pressed()[K_w]):
-                player.move(0, -1 * player.speed, 0)
-                if player.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player.playerPoint[1] <= tileSize + playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[0]:
-                    floor.currentRoom[0] -= 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_s]):
-                player.move(0, 1 * player.speed, 2)
-                if player.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player.playerPoint[1] >= tileSize + tileHeight - playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[2]:
-                    floor.currentRoom[0] += 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_a]):
-                player.move(-1 * player.speed, 0, 3)
-                if player.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player.playerPoint[0] <= tileSize + playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[3]:
-                    floor.currentRoom[1] -= 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_d]):
-                player.move(1 * player.speed, 0, 1)
-                if player.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player.playerPoint[0] >= tileSize + tileWidth - playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[1]:
-                    floor.currentRoom[1] += 1
-                    spawn()
-            if not (pyg.key.get_pressed()[K_w] or pyg.key.get_pressed()[K_s] or pyg.key.get_pressed()[K_a] or pyg.key.get_pressed()[K_d]):
-                player.frame = 1
-            while player.playerPoint[0] - playerWidth / 2 < xoffset + tileSize:
-                player.move(1, 0, 3)
-            while player.playerPoint[0] + playerWidth / 2 > xoffset + tileSize + tileWidth:
-                player.move(-1, 0, 1)
-            while player.playerPoint[1] - playerHeight / 2 < yoffset + tileSize:
-                player .move(0, 1, 0)
-            while player.playerPoint[1] + playerHeight / 2 > yoffset + tileSize + tileHeight:
-                player.move(0, -1, 2)
-        
-            
-            # player two handling
-        if player2.living == True:
-            if (pyg.key.get_pressed()[K_UP]):
-                 player2.move(0, -1 * player2.speed, 0)
-                 if player2.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player2.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player2.playerPoint[1] <= tileSize + playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[0]:
-                    floor.currentRoom[0] -= 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_DOWN]):
-                player2.move(0, 1 * player2.speed, 2)
-                if player2.playerPoint[0] > totalWidth / 2 - 75 / 2 + playerWidth / 2 + xoffset and player2.playerPoint[0] < totalWidth / 2 + 75 / 2 - playerWidth / 2 + xoffset and player2.playerPoint[1] >= tileSize + tileHeight - playerHeight / 2 + yoffset and floor.getCurrentRoom().doors[2]:
-                    floor.currentRoom[0] += 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_LEFT]):
-                player2.move(-1 * player2.speed, 0, 3)
-                if player2.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player2.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player2.playerPoint[0] <= tileSize + playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[3]:
-                    floor.currentRoom[1] -= 1
-                    spawn()
-            if (pyg.key.get_pressed()[K_RIGHT]):
-                player2.move(1 * player2.speed, 0, 1)
-                if player2.playerPoint[1] > totalHeight / 2 - 150 / 2 + playerHeight / 2 + yoffset and player2.playerPoint[1] < totalHeight / 2 + 150 / 2 - playerHeight / 2 + yoffset and player2.playerPoint[0] >= tileSize + tileWidth - playerWidth / 2 + xoffset and floor.getCurrentRoom().doors[1]:
-                    floor.currentRoom[1] += 1
-                    spawn()
-            if not (pyg.key.get_pressed()[K_UP] or pyg.key.get_pressed()[K_DOWN] or pyg.key.get_pressed()[K_LEFT] or pyg.key.get_pressed()[K_RIGHT]):
-                player2.frame = 1
-            while player2.playerPoint[0] - playerWidth / 2 < xoffset + tileSize:
-                player2.move(1, 0, 3)
-            while player2.playerPoint[0] + playerWidth / 2 > xoffset + tileSize + tileWidth:
-                player2.move(-1, 0, 1)
-            while player2.playerPoint[1] - playerHeight / 2 < yoffset + tileSize:
-                player2.move(0, 1, 0)
-            while player2.playerPoint[1] + playerHeight / 2 > yoffset + tileSize + tileHeight:
-                player2.move(0, -1, 2)
-            draw()
+        act()
+        draw()
 
 
 spawn()
