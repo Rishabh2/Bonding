@@ -20,3 +20,7 @@ class Enemy(object):
             self.point = self.calc.moveTo(self.point, player1, self.speed)
         else:
             self.point = self.calc.moveTo(self.point, player2, self.speed)
+        return False
+            
+    def isBullet(self):
+        return False

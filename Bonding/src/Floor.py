@@ -41,7 +41,7 @@ class Floor(object):
         possibleEnemies1 = [Enemy.Enemy(50, 2, 7, (300, 300), False), Enemy.Enemy(75, 2, 5, (300, 300), False), Enemy.Enemy(30, 4, 6, (300, 300), False)]
         possibleEnemies2 = [Enemy.Enemy(50, 2, 7, (650, 300), True), Enemy.Enemy(75, 2, 5, (650, 300), True), Enemy.Enemy(30, 4, 6, (650, 300), True)]
         possibleEnemies3 = [Enemy.Enemy(50, 2, 7, (1000, 300), True), Enemy.Enemy(75, 2, 5, (1000, 300), False), Enemy.Enemy(30, 4, 6, (1000, 300), True)]
-        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], False, [possibleEnemies1[random.randrange(3)], possibleEnemies2[random.randrange(3)], possibleEnemies3[random.randrange(3)]]) for col in range(cols)] for row in range(rows)]
+        self.rooms = [[Room.Room(row, col, tileRows, tileCols, [[0 for col in range(tileCols)] for row in range(tileRows)], True, [possibleEnemies1[random.randrange(3)], possibleEnemies2[random.randrange(3)], possibleEnemies3[random.randrange(3)]]) for col in range(cols)] for row in range(rows)]
         self.currentRoom = [0, 0]
         self.rooms[self.currentRoom[0]][self.currentRoom[1]].enemies = []
         current = (random.randrange(rows), random.randrange(cols))

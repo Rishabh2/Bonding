@@ -6,6 +6,7 @@ import Floor
 import Room
 import Calculator
 from math import *
+import Bullet
 import sys
 
 # all pygame functions
@@ -25,6 +26,7 @@ tileSize = 75
 totalRows = 8
 totalCols = 15
 backstabMod = .9  # must be <1, how much damage you keep per backstab
+killBonus = 1.1
 tileWidth = tileSize * tileCols
 tileHeight = tileSize * tileRows
 totalWidth = tileSize * totalCols
@@ -35,6 +37,7 @@ mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
 enemyRadius = 15
+bulletSize = 10
 # image assigning
 playerBuffer = 6
 playerWidth = 27
@@ -52,8 +55,9 @@ wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
 bossImage = pyg.image.load("boss1.png")
 redImage = pyg.image.load("red.png")
+bulletImage = pyg.image.load("Bullet.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
-pyg.display.set_caption("Map Test")
+pyg.display.set_caption("Bonding")
 calc = Calculator.Calculator()
 
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
@@ -127,7 +131,10 @@ def draw():
     screen.blit(player2Image, (player2.playerPoint[0] - playerWidth / 2, player2.playerPoint[1] - playerHeight / 2), (player2.frame * (playerWidth + playerBuffer), player2.dir * playerHeight, playerWidth, playerHeight))
         
     for enemy in floor.getCurrentRoom().enemies:
-        screen.blit(bossImage, (enemy.point[0], enemy.point[1]))
+        if not enemy.isBullet():
+            screen.blit(bossImage, (enemy.point[0], enemy.point[1]))
+        else:
+            screen.blit(bulletImage, (enemy.point[0], enemy.point[1]))
     
     pyg.display.update()
     
@@ -199,16 +206,24 @@ def act():
         
     # enemy handling
     for enemy in floor.getCurrentRoom().enemies:
-        enemy.move(player.playerPoint, player2.playerPoint)
-        if calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius and calc.between(enemy.point, player.playerPoint, player2.playerPoint):
-            ribbon.doDamage(player.playerPoint, player2.playerPoint, enemy)
-            print(enemy.health)
-            if enemy.health <= 0:
-                floor.getCurrentRoom().enemies.remove(enemy)
-        if calc.distance(player.playerPoint, enemy.point) < enemyRadius:
-            player.addHealth(-enemy.damage)
-        if calc.distance(player2.playerPoint, enemy.point) < enemyRadius:
-            player2.addHealth(-enemy.damage)
+        if enemy.move(player.playerPoint, player2.playerPoint):
+            floor.getCurrentRoom().enemies.remove(enemy)
+        else:
+            if (not enemy.isBullet()) and calc.lineDistance(enemy.point, player.playerPoint, player2.playerPoint) < enemyRadius and calc.between(enemy.point, player.playerPoint, player2.playerPoint):
+                ribbon.doDamage(player.playerPoint, player2.playerPoint, enemy)
+                if enemy.health <= 0:
+                    floor.getCurrentRoom().enemies.remove(enemy)
+                    ribbon.damamod = ribbon.damamod * killBonus
+            if calc.distance(player.playerPoint, enemy.point) < enemyRadius:
+                player.addHealth(-enemy.damage)
+                if enemy.isBullet():
+                    floor.getCurrentRoom().enemies.remove(enemy)
+            if calc.distance(player2.playerPoint, enemy.point) < enemyRadius:
+                player2.addHealth(-enemy.damage)
+                if enemy.isBullet():
+                    floor.getCurrentRoom().enemies.remove(enemy)
+            if not enemy.isBullet() and enemy.shoots and random.randrange(60) == 0:
+                floor.getCurrentRoom().enemies.append(Bullet.Bullet(enemy.point, (player.playerPoint, player2.playerPoint)[random.randrange(1)], 10))
  
             
     if player.health <= 0:
