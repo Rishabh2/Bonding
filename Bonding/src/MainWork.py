@@ -34,7 +34,7 @@ yoffset = (screenHeight - totalHeight) * 3 / 4
 mapSize = 120
 roomSize = mapSize / roomRows
 mapBuffer = 10
-enemyRadius = 30
+enemyRadius = 15
 # image assigning
 playerBuffer = 6
 playerWidth = 27
