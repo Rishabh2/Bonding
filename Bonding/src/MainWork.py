@@ -56,7 +56,7 @@ wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
 bossImage = pyg.image.load("boss1.png")
 redImage = pyg.image.load("red.png")
-greenImage = pyg.image.load("green.png")
+#greenImage = pyg.image.load("green.png")
 bulletImage = pyg.image.load("Bullet.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
 calc = Calculator.Calculator()
@@ -242,10 +242,10 @@ def act():
             
     if player.health <= 0:
         player.health = 0
-  #      end()
+        end()
     if player2.health <= 0:
         player2.health = 0
-     #   end()
+        end()
         
         
 def mainLoop():
