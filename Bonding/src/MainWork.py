@@ -26,7 +26,7 @@ tileSize = 75
 totalRows = 8
 totalCols = 15
 backstabMod = .9  # must be <1, how much damage you keep per backstab
-killBonus = 1.1
+killBonus = 1.05
 tileWidth = tileSize * tileCols
 tileHeight = tileSize * tileRows
 totalWidth = tileSize * totalCols
@@ -38,6 +38,7 @@ roomSize = mapSize / roomRows
 mapBuffer = 10
 enemyRadius = 15
 bulletSize = 10
+floorNum = 1
 # image assigning
 playerBuffer = 6
 playerWidth = 27
@@ -55,9 +56,9 @@ wallImage = pyg.image.load("Wall.png")
 vwallImage = pyg.image.load("VWall.png")
 bossImage = pyg.image.load("boss1.png")
 redImage = pyg.image.load("red.png")
+greenImage = pyg.image.load("green.png")
 bulletImage = pyg.image.load("Bullet.png")
 screen = pyg.display.set_mode([screenWidth, screenHeight])
-pyg.display.set_caption("Bonding")
 calc = Calculator.Calculator()
 
 floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
@@ -84,6 +85,7 @@ def spawn():
     pyg.time.delay(500)
     
 def draw():
+    pyg.display.set_caption("Bonding: Floor " + str(floorNum))
     screen.fill([0, 0, 0])
      
     for y in range(roomRows):
@@ -214,6 +216,18 @@ def act():
                 if enemy.health <= 0:
                     floor.getCurrentRoom().enemies.remove(enemy)
                     ribbon.damamod = ribbon.damamod * killBonus
+                    if ribbon.damamod > 2:
+                        ribbon.damamod = 1.5
+                    if floor.currentRoom == floor.bossRoom:
+                        floorNum += 1
+                        # floor = Floor.Floor(roomRows, roomCols, tileRows, tileCols)
+                        green = 0
+                        while green <= 150:
+                            greenImage.set_alpha(green)
+                            screen.blit(greenImage, (0, 0))
+                            pyg.display.update()
+                            red += 1
+                        draw()
             if calc.distance(player.playerPoint, enemy.point) < enemyRadius:
                 player.addHealth(-enemy.damage)
                 if enemy.isBullet():
@@ -228,10 +242,10 @@ def act():
             
     if player.health <= 0:
         player.health = 0
-        end()
+  #      end()
     if player2.health <= 0:
         player2.health = 0
-        end()
+     #   end()
         
         
 def mainLoop():
@@ -255,7 +269,6 @@ def mainLoop():
                         ribbon.damamod = ribbon.damamod * backstabMod
         act()
         draw()
-
 
 spawn()
 mainLoop()
