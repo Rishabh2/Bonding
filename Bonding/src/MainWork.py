@@ -242,10 +242,10 @@ def act():
             
     if player.health <= 0:
         player.health = 0
-  #      end()
+        end()
     if player2.health <= 0:
         player2.health = 0
-     #   end()
+        end()
         
         
 def mainLoop():
