@@ -67,6 +67,12 @@ player2 = Player.Player(100, 10, (screenWidth * 3 / 4, screenHeight), 100, True)
 
 ribbon = Ribbon.Ribbon()
 
+def instructions():
+    screen.blit(healthFont.render("Move player 1 with WASD. Move player 2 with the arrow keys", 1, [255, 255, 255]), (50, 350))
+    screen.blit(healthFont.render("Use the red line to attack enemies. Try to find and kill the boss", 1, [255, 255, 255]), (50, 450))
+    pyg.display.update()
+    pyg.time.delay(3000)
+
 def end():
     draw()
     red = 0
@@ -270,5 +276,6 @@ def mainLoop():
         act()
         draw()
 
+instructions()
 spawn()
 mainLoop()
